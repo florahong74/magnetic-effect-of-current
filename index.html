@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전류의 자기 작용</title>
+<meta name="description" content="중학교 2학년 과학 Ⅶ. 전기와 자기 - 3. 전류의 자기 작용 1차시 탐구 수업 자료">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --surface-2:#f0ede6; --ink:#1d1f24; --ink-2:#555a64; --line:#dcd7cc;
+  --accent:#2f5bd3; --accent-ink:#ffffff; --n:#d6403a; --s:#2f66c9; --copper:#c0712f; --copper-dim:#e7c3a2;
+  --field:#7a4fd0; --ok:#1f8a53; --bad:#c23b3b; --warn-bg:#fff6dd; --canvas:#fbfaf7; --grid:#ece8df;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171c; --surface:#1e2128; --surface-2:#262a33; --ink:#ecedf0; --ink-2:#a6abb6; --line:#363b46;
+    --accent:#7aa2ff; --accent-ink:#0f1320; --n:#ff6b62; --s:#69a0ff; --copper:#e39a5a; --copper-dim:#6b4a33;
+    --field:#b18cff; --ok:#4fd18c; --bad:#ff7a7a; --warn-bg:#2e2a1c; --canvas:#1a1d23; --grid:#262a32;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171c; --surface:#1e2128; --surface-2:#262a33; --ink:#ecedf0; --ink-2:#a6abb6; --line:#363b46;
+  --accent:#7aa2ff; --accent-ink:#0f1320; --n:#ff6b62; --s:#69a0ff; --copper:#e39a5a; --copper-dim:#6b4a33;
+  --field:#b18cff; --ok:#4fd18c; --bad:#ff7a7a; --warn-bg:#2e2a1c; --canvas:#1a1d23; --grid:#262a32;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;line-height:1.65;font-size:17px}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header.hero{padding:40px 0 24px}
+.unit{font-size:14px;color:var(--ink-2);font-weight:500;letter-spacing:.02em}
+h1{font-size:clamp(30px,6vw,46px);font-weight:900;margin:6px 0 10px;letter-spacing:-.02em}
+h2{font-size:clamp(22px,4vw,28px);margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:18px;margin:18px 0 6px}
+p{margin:8px 0}
+.lead{font-size:18px;color:var(--ink-2);max-width:680px}
+nav.steps{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.steps .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.steps a{flex:0 0 auto;text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+nav.steps a.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+section{padding:36px 0 8px;scroll-margin-top:56px}
+.tag{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.question{background:var(--warn-bg);border-radius:16px;padding:18px 20px;margin:14px 0;font-weight:700;font-size:19px}
+.question small{display:block;font-weight:400;font-size:15px;color:var(--ink-2);margin-top:4px}
+.goal{border-left:4px solid var(--accent);padding:4px 0 4px 14px;margin:12px 0;color:var(--ink-2)}
+canvas{display:block;width:100%;height:auto;border-radius:12px;background:var(--canvas);border:1px solid var(--line);touch-action:none}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:12px}
+.ctrl{display:flex;align-items:center;gap:8px;font-size:15px}
+.ctrl input[type=range]{width:150px;accent-color:var(--accent)}
+button{font:inherit;font-size:15px;font-weight:500;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);padding:8px 14px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.on{background:var(--ok);border-color:var(--ok);color:#fff}
+label.chk{display:flex;align-items:center;gap:6px;font-size:15px;cursor:pointer}
+label.chk input{accent-color:var(--accent);width:18px;height:18px}
+.readout{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pill{font-size:14px;background:var(--surface-2);border-radius:8px;padding:4px 10px;color:var(--ink-2)}
+.pill b{color:var(--ink)}
+.predict{margin:12px 0}
+.predict .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.predict .opts button.picked{outline:2px solid var(--accent)}
+.hint{font-size:15px;color:var(--ink-2)}
+.reveal{display:none;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--surface-2)}
+.reveal.show{display:block}
+.concept{background:var(--surface-2);border-radius:14px;padding:14px 18px;margin:14px 0}
+.concept b.key{color:var(--accent)}
+textarea{width:100%;min-height:80px;font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);resize:vertical}
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:center}
+th{color:var(--ink-2);font-weight:500}
+.quiz .q{margin:18px 0}
+.quiz .q p{font-weight:500}
+.quiz .choices{display:grid;gap:8px}
+.quiz .choices button{text-align:left}
+.quiz .choices button.correct{background:color-mix(in srgb,var(--ok) 18%,var(--surface));border-color:var(--ok)}
+.quiz .choices button.wrong{background:color-mix(in srgb,var(--bad) 15%,var(--surface));border-color:var(--bad)}
+.quiz .fb{font-size:15px;margin-top:6px;color:var(--ink-2)}
+.score{font-weight:700;font-size:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}.ctrl input[type=range]{width:120px}}
+details{margin:12px 0}
+summary{cursor:pointer;font-weight:500}
+footer{padding:40px 0 60px;color:var(--ink-2);font-size:14px}
+.theme-btn{position:fixed;right:14px;bottom:14px;z-index:20;border-radius:999px;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="unit">중학교 2학년 과학 · Ⅶ. 전기와 자기 · 3. 전류의 자기 작용</div>
+  <h1>전류의 자기 작용</h1>
+  <p class="lead">전류가 흐르는 코일 주위에는 무슨 일이 일어날까요? 시뮬레이션으로 직접 실험하면서 <b>전동기가 도는 원리</b>까지 알아봅시다.</p>
+</header>
+
+<nav class="steps" aria-label="수업 단계">
+  <div class="wrap">
+    <a href="#intro">① 생각 열기</a>
+    <a href="#lab1">② 코일 주위의 자기장</a>
+    <a href="#lab2">③ 코일이 받는 힘</a>
+    <a href="#lab3">④ 전동기의 원리</a>
+    <a href="#quiz">⑤ 확인 문제</a>
+    <a href="#wrap">⑥ 정리</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ① 도입 -->
+<section id="intro">
+  <span class="tag">① 생각 열기</span>
+  <h2>헤어드라이어, 선풍기, 드론의 공통점은?</h2>
+  <p>모두 안에 <b>전동기(모터)</b>가 들어 있어요. 전동기가 빨리 돌수록 바람이 세지고, 드론 날개도 빨리 돌아요.</p>
+  <div class="question">전동기를 더 빨리 회전하게 하려면 어떻게 해야 할까?
+    <small>지금 생각을 적어 두고, 수업 마지막에 다시 확인해 봅시다.</small></div>
+  <textarea id="firstIdea" placeholder="내 생각: "></textarea>
+  <div class="card">
+    <b>알고 있는 것 확인하기</b>
+    <ul>
+      <li>자석의 같은 극끼리는 <b>밀어 내고</b>, 다른 극끼리는 <b>끌어당긴다</b>.</li>
+      <li>자석이나 철 사이에 작용하는 힘을 <b>자기력</b>, 자기력이 작용하는 공간을 <b>자기장</b>이라고 한다.</li>
+      <li>자기장의 방향은 <b>나침반 바늘의 N극이 가리키는 방향</b>이다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ② 탐구1 -->
+<section id="lab1">
+  <span class="tag">② 탐구 1</span>
+  <h2>전류가 흐르는 코일 주위의 자기장</h2>
+  <p class="goal">학습 목표: 전류가 흐르는 코일 주위의 자기장을 관찰하고 설명할 수 있다.</p>
+
+  <div class="predict card" data-predict="p1">
+    <b>예상해 보기</b> 코일에 흐르는 전류의 방향을 반대로 바꾸면 나침반 바늘은 어떻게 될까?
+    <div class="opts">
+      <button data-v="a">그대로 있다</button>
+      <button data-v="b">반대 방향을 가리킨다</button>
+      <button data-v="c">빙글빙글 돈다</button>
+    </div>
+    <div class="hint" data-msg>예상을 고른 다음 아래 시뮬레이션으로 확인해 보세요.</div>
+  </div>
+
+  <canvas id="c1" aria-label="코일과 나침반 시뮬레이션"></canvas>
+  <div class="controls">
+    <button id="s1Switch" class="primary">스위치 닫기</button>
+    <button id="s1Flip">⇄ 전류 방향 바꾸기</button>
+    <div class="ctrl">전류 세기 <input type="range" id="s1I" min="0.5" max="5" step="0.5" value="2"><b id="s1Iv">2.0 A</b></div>
+  </div>
+  <div class="controls">
+    <label class="chk"><input type="checkbox" id="s1Lines"> 자기력선 보기</label>
+    <label class="chk"><input type="checkbox" id="s1Poles"> 코일의 N극·S극 표시</label>
+    <label class="chk"><input type="checkbox" id="s1Clip" checked> 클립 매달기</label>
+  </div>
+  <p class="hint">💡 나침반을 손가락(마우스)으로 끌어서 코일 주위 여러 곳에 놓아 보세요.</p>
+
+  <div class="card">
+    <b>관찰 기록</b>
+    <div class="grid2">
+      <div><h3>전류의 방향을 바꾸면?</h3><textarea id="obs1a" placeholder="나침반 바늘의 N극이 가리키는 방향은 …"></textarea></div>
+      <div><h3>전류의 세기를 세게 하면?</h3><textarea id="obs1b" placeholder="클립이 끌려 오는 정도는 …"></textarea></div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <p><b class="key">개념 정리</b></p>
+    <p>코일에 전류가 흐르면 코일 주위에 <b>자기장</b>이 생긴다. 그 모양은 <b>막대자석 주위의 자기장과 비슷</b>하다.</p>
+    <p>✋ <b>오른손 법칙</b>: 오른손 네 손가락을 코일에 흐르는 <b>전류의 방향</b>으로 감아쥐면, 엄지손가락이 가리키는 방향이 코일 안 <b>자기장의 방향(N극 쪽)</b>이다.</p>
+    <p>전류의 <b>방향</b>이 바뀌면 자기장의 방향이 바뀌고, 전류의 <b>세기</b>가 세지면 자기장도 세진다. → 이것을 이용한 것이 <b>전자석</b>(전자석 기중기, 자기 부상 열차 등)이다.</p>
+  </div>
+</section>
+
+<!-- ③ 탐구2 -->
+<section id="lab2">
+  <span class="tag">③ 탐구 2</span>
+  <h2>자기장 안에서 전류가 흐르는 코일이 받는 힘</h2>
+  <p class="goal">학습 목표: 자기장 안에서 전류가 흐르는 코일이 받는 힘의 특성을 설명할 수 있다.</p>
+  <p>그네처럼 매달린 코일 옆에 자석을 놓고 전류를 흘려 봅시다. 코일은 어느 쪽으로 움직일까요?</p>
+
+  <canvas id="c2" aria-label="그네형 코일과 자석 시뮬레이션"></canvas>
+  <div class="controls">
+    <button id="s2Switch" class="primary">스위치 누르기</button>
+    <button id="s2Flip">⇄ 전류 방향 바꾸기</button>
+    <button id="s2Mag">🧲 자석 뒤집기</button>
+    <div class="ctrl">전류 세기 <input type="range" id="s2I" min="0.5" max="5" step="0.5" value="2"><b id="s2Iv">2.0 A</b></div>
+  </div>
+  <div class="controls">
+    <label class="chk"><input type="checkbox" id="s2Poles"> 코일의 N극·S극 표시</label>
+  </div>
+
+  <div class="card">
+    <b>실험 결과표</b> <span class="hint">— 스위치를 누른 뒤 [결과 기록]을 눌러 표를 채워 보세요.</span>
+    <table id="t2">
+      <thead><tr><th>자석의 왼쪽 면</th><th>전류 방향</th><th>전류 세기</th><th>코일의 움직임</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="controls"><button id="s2Rec">결과 기록</button><button id="s2Clr">표 지우기</button></div>
+  </div>
+
+  <div class="concept">
+    <p><b class="key">개념 정리</b></p>
+    <p>자기장 안에서 코일에 전류가 흐르면 코일도 자석처럼 되어 <b>힘을 받는다</b>.</p>
+    <p>코일과 자석의 <b>같은 극끼리 마주 보면 밀어 내고</b>, <b>다른 극끼리 마주 보면 끌어당긴다</b>.</p>
+    <p>자석의 방향이나 전류의 방향 중 <b>하나를 바꾸면</b> 힘의 방향이 반대가 되고, 전류가 <b>셀수록 힘이 커진다</b>.</p>
+  </div>
+</section>
+
+<!-- ④ 탐구3 -->
+<section id="lab3">
+  <span class="tag">④ 탐구 3</span>
+  <h2>전동기는 어떻게 계속 돌까?</h2>
+  <p class="goal">학습 목표: 전동기의 원리를 설명할 수 있다.</p>
+  <p>전동기는 <b>자석</b>과 <b>코일</b>로 이루어져 있어요. 자석 사이에 놓인 코일에 전류가 흐르면 코일에 N극과 S극이 생기고, 자석과 밀고 당기면서 회전합니다.</p>
+
+  <canvas id="c3" aria-label="전동기 시뮬레이션"></canvas>
+  <div class="controls">
+    <button id="s3Switch" class="primary">전원 켜기</button>
+    <div class="ctrl">전류 세기 <input type="range" id="s3I" min="0.5" max="5" step="0.5" value="2"><b id="s3Iv">2.0 A</b></div>
+    <div class="ctrl">자석 세기 <input type="range" id="s3B" min="1" max="3" step="1" value="1"><b id="s3Bv">약</b></div>
+  </div>
+  <div class="controls">
+    <label class="chk"><input type="checkbox" id="s3Comm" checked> 정류자 사용 (반 바퀴마다 전류 방향을 바꿔 줌)</label>
+  </div>
+
+  <div class="predict card" data-predict="p3">
+    <b>도전!</b> [정류자 사용]을 끄고 전원을 켜면 코일은 어떻게 될까?
+    <div class="opts">
+      <button data-v="a">더 빨리 돈다</button>
+      <button data-v="b">조금 흔들리다 멈춘다</button>
+      <button data-v="c">똑같이 돈다</button>
+    </div>
+    <div class="hint" data-msg>예상을 고른 다음 직접 확인해 보세요.</div>
+  </div>
+
+  <div class="card">
+    <b>회전 속도 측정</b> <span class="hint">— 조건을 바꿔 가며 기록하고, 무엇이 속도를 높이는지 찾아보세요.</span>
+    <table id="t3">
+      <thead><tr><th>전류 세기</th><th>자석 세기</th><th>정류자</th><th>회전 속도(회/분)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="controls"><button id="s3Rec">속도 기록</button><button id="s3Clr">표 지우기</button></div>
+  </div>
+
+  <div class="concept">
+    <p><b class="key">개념 정리</b></p>
+    <p>전동기는 <b>자기장 안에서 전류가 흐르는 코일이 받는 힘</b>을 이용해 회전한다.</p>
+    <p>코일에 흐르는 <b>전류의 방향이 반 바퀴마다 바뀌어야</b> 코일의 극이 바뀌어 같은 방향으로 계속 회전할 수 있다.</p>
+    <p><b>전류가 셀수록, 자석이 셀수록</b> 코일이 받는 힘이 커져 전동기가 더 빨리 회전한다.</p>
+  </div>
+</section>
+
+<!-- ⑤ 퀴즈 -->
+<section id="quiz">
+  <span class="tag">⑤ 확인 문제</span>
+  <h2>스스로 확인하기</h2>
+  <div class="quiz" id="quizBox"></div>
+  <p class="score" id="quizScore"></p>
+</section>
+
+<!-- ⑥ 정리 -->
+<section id="wrap">
+  <span class="tag">⑥ 정리</span>
+  <h2>처음 질문에 답해 보기</h2>
+  <div class="question">전동기를 더 빨리 회전하게 하려면 어떻게 해야 할까?</div>
+  <div class="grid2">
+    <div class="card"><b>수업 전 내 생각</b><p id="firstIdeaEcho" class="hint">(① 생각 열기에 적은 내용이 여기에 나타나요)</p></div>
+    <div class="card"><b>지금 내 생각</b><textarea id="finalIdea" placeholder="탐구 결과를 근거로 써 보세요."></textarea></div>
+  </div>
+  <details class="card">
+    <summary>모범 답안 보기</summary>
+    <p>코일에 흐르는 <b>전류의 세기를 세게</b> 하거나 <b>더 센 자석</b>을 사용하면 코일이 받는 힘이 커져서 전동기가 더 빨리 회전한다. (코일을 더 많이 감아도 코일의 자기장이 세진다.)</p>
+    <p>전류의 <b>방향</b>만 바꾸면 회전 방향이 바뀔 뿐, 빨라지지는 않는다.</p>
+  </details>
+  <div class="card">
+    <b>생활 속 전류의 자기 작용</b>
+    <ul>
+      <li><b>전자석 기중기</b>: 전류를 흘리면 고철을 들어 올리고, 끊으면 내려놓는다.</li>
+      <li><b>자기 부상 열차</b>: 전자석의 힘으로 열차를 띄워 마찰을 줄인다.</li>
+      <li><b>인덕션 레인지</b>: 코일에 흐르는 전류가 만든 자기장으로 조리 도구를 가열한다.</li>
+      <li><b>전동기</b>: 선풍기, 헤어드라이어, 세탁기, 전기 자동차, 드론 등</li>
+    </ul>
+  </div>
+  <details class="card">
+    <summary>교사용: 수업 흐름 (45분)</summary>
+    <table>
+      <thead><tr><th>단계</th><th>시간</th><th>활동</th></tr></thead>
+      <tbody>
+        <tr><td>① 생각 열기</td><td>5분</td><td>전동기 사례, 핵심 질문 제시, 처음 생각 쓰기</td></tr>
+        <tr><td>② 탐구 1</td><td>12분</td><td>예상 → 나침반·클립 관찰 → 오른손 법칙</td></tr>
+        <tr><td>③ 탐구 2</td><td>10분</td><td>자석·전류 방향을 바꾸며 결과표 작성 → 같은 극 밀어내기, 다른 극 끌어당기기</td></tr>
+        <tr><td>④ 탐구 3</td><td>10분</td><td>정류자 켜고 끄기 비교, 전류·자석 세기와 회전 속도 관계</td></tr>
+        <tr><td>⑤ 확인 문제</td><td>6분</td><td>6문항 자기 점검</td></tr>
+        <tr><td>⑥ 정리</td><td>2분</td><td>핵심 질문에 근거를 들어 답하기</td></tr>
+      </tbody>
+    </table>
+    <p class="hint">시뮬레이션은 개념 이해를 돕기 위해 단순화한 모델입니다. 가능하면 실제 코일·나침반 실험과 함께 사용하세요.</p>
+  </details>
+</section>
+</main>
+
+<footer class="wrap">중학교 2학년 과학 Ⅶ. 전기와 자기 — 3. 전류의 자기 작용 · 1차시 탐구 수업 자료</footer>
+<button class="theme-btn" id="themeBtn" aria-label="화면 테마 바꾸기">🌓</button>
+
+<script>
+(() => {
+"use strict";
+
+/* ---------- 공통 유틸 ---------- */
+const $ = id => document.getElementById(id);
+const store = {
+  get(k){ try{ return localStorage.getItem("mag-"+k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem("mag-"+k, v); }catch(e){} }
+};
+let C = {};
+function readColors(){
+  const cs = getComputedStyle(document.documentElement);
+  ["ink","ink-2","line","n","s","copper","copper-dim","field","canvas","grid","accent","surface","surface-2","ok"]
+    .forEach(k => C[k] = cs.getPropertyValue("--"+k).trim());
+}
+readColors();
+try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors); }catch(e){}
+
+$("themeBtn").onclick = () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  store.set("theme", root.dataset.theme);
+  readColors();
+};
+const savedTheme = store.get("theme");
+if (savedTheme) { document.documentElement.dataset.theme = savedTheme; readColors(); }
+
+function setupCanvas(cv, W, H){
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = W*dpr; cv.height = H*dpr;
+  const ctx = cv.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return ctx;
+}
+function toLogical(cv, W, e){
+  const r = cv.getBoundingClientRect();
+  const s = W / r.width;
+  return { x:(e.clientX - r.left)*s, y:(e.clientY - r.top)*s };
+}
+function arrowHead(ctx, x, y, ang, size, color){
+  ctx.save(); ctx.translate(x,y); ctx.rotate(ang);
+  ctx.fillStyle = color; ctx.beginPath();
+  ctx.moveTo(size,0); ctx.lineTo(-size*0.8, size*0.7); ctx.lineTo(-size*0.8,-size*0.7); ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+function label(ctx, text, x, y, color, size=16, weight=700, align="center"){
+  ctx.fillStyle = color; ctx.font = `${weight} ${size}px "Noto Sans KR", sans-serif`;
+  ctx.textAlign = align; ctx.textBaseline = "middle"; ctx.fillText(text, x, y);
+}
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* 코일 그리기: frontDir=+1 이면 앞쪽 도선에 전류가 아래로 흐름 → 오른쪽 끝이 N극 */
+function drawCoil(ctx, x0, x1, cy, R, turns, frontDir, on, phase){
+  const dx = (x1-x0)/turns;
+  ctx.save();
+  ctx.fillStyle = C["surface-2"]; ctx.globalAlpha = 0.55;
+  roundRect(ctx, x0-4, cy-R, x1-x0+8, 2*R, 10); ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.lineCap = "round";
+  // 뒤쪽 도선
+  ctx.strokeStyle = C["copper-dim"]; ctx.lineWidth = 4;
+  for(let i=0;i<turns;i++){
+    const x = x0 + i*dx;
+    ctx.beginPath(); ctx.moveTo(x+dx*0.5, cy+R); ctx.lineTo(x+dx, cy-R); ctx.stroke();
+  }
+  // 앞쪽 도선
+  ctx.strokeStyle = C.copper; ctx.lineWidth = 5;
+  for(let i=0;i<turns;i++){
+    const x = x0 + i*dx;
+    ctx.beginPath(); ctx.moveTo(x, cy-R); ctx.lineTo(x+dx*0.5, cy+R); ctx.stroke();
+  }
+  // 전류 화살표
+  if(on){
+    const ang = Math.atan2(2*R, dx*0.5) + (frontDir>0 ? 0 : Math.PI);
+    for(let i=0;i<turns;i++){
+      const x = x0 + i*dx;
+      const t = ((phase*frontDir) % 1 + 1) % 1;
+      const px = x + dx*0.5*t, py = cy - R + 2*R*t;
+      arrowHead(ctx, px, py, ang, 6, C.accent);
+    }
+  }
+  ctx.restore();
+}
+
+/* 예상하기 */
+document.querySelectorAll("[data-predict]").forEach(box => {
+  const key = box.dataset.predict;
+  const answer = { p1:"b", p3:"b" }[key];
+  const fb = {
+    p1: { a:"이 예상이 맞는지 전류 방향을 바꿔 확인해 보세요!", b:"좋은 예상이에요. 직접 확인해 볼까요?", c:"정말 그런지 직접 확인해 보세요!" },
+    p3: { a:"정말 그런지 확인해 보세요!", b:"좋은 예상이에요. 직접 확인해 볼까요?", c:"정말 그런지 확인해 보세요!" }
+  }[key];
+  const msg = box.querySelector("[data-msg]");
+  box.querySelectorAll(".opts button").forEach(b => b.onclick = () => {
+    box.querySelectorAll(".opts button").forEach(x => x.classList.remove("picked"));
+    b.classList.add("picked");
+    msg.textContent = "내 예상: " + b.textContent + " — " + fb[b.dataset.v];
+  });
+});
+
+/* 글쓰기 칸 저장 */
+["firstIdea","obs1a","obs1b","finalIdea"].forEach(id => {
+  const el = $(id); const v = store.get(id); if (v) el.value = v;
+  el.addEventListener("input", () => { store.set(id, el.value); if(id==="firstIdea") echoIdea(); });
+});
+function echoIdea(){
+  const v = $("firstIdea").value.trim();
+  $("firstIdeaEcho").textContent = v || "(① 생각 열기에 적은 내용이 여기에 나타나요)";
+}
+echoIdea();
+
+/* ---------- 시뮬레이션 1: 코일 주위의 자기장 ---------- */
+const S1 = (() => {
+  const W = 720, H = 430;
+  const cv = $("c1"); const ctx = setupCanvas(cv, W, H);
+  const cx = 360, cy = 200, x0 = 240, x1 = 480, R = 55, TURNS = 10;
+  const st = { on:false, dir:1, I:2, lines:false, poles:false, clip:true, phase:0, clipA:0, clipV:0 };
+  const compasses = [
+    {x:120,y:200},{x:600,y:290},{x:300,y:85},{x:430,y:85},{x:300,y:320},{x:430,y:320}
+  ].map(p => ({...p, a:-Math.PI/2}));
+
+  // 오른쪽 끝이 N극일 때(dir=+1)의 코일 바깥 자기장: 양 끝면에 자극을 나누어 둔 모델
+  const charges = [];
+  for(let k=0;k<7;k++){
+    const y = cy - R + (2*R)*k/6;
+    charges.push({x:x1, y, q: 1/7}); charges.push({x:x0, y, q:-1/7});
+  }
+  function inside(x,y){ return x > x0 && x < x1 && Math.abs(y-cy) < R; }
+  function Bplus(x,y){
+    if (inside(x,y)) return {x: 1/(R*R*0.9), y:0};
+    let bx=0, by=0;
+    for(const c of charges){
+      const dx = x-c.x, dy = y-c.y; const r2 = dx*dx+dy*dy+25; const r3 = r2*Math.sqrt(r2);
+      bx += c.q*dx/r3; by += c.q*dy/r3;
+    }
+    return {x:bx, y:by};
+  }
+  // 자기력선 미리 계산 (dir=+1 기준)
+  const lines = [];
+  // 한 끝면에서 출발해 자기장(sign=+1) 또는 반대 방향(sign=-1)으로 따라가며 선을 그림
+  function trace(xs, ys, sign, endX){
+    const pts = []; let x = xs, y = ys, closed = false;
+    for(let i=0;i<2500;i++){
+      pts.push([x,y]);
+      const b = Bplus(x,y); const m = Math.hypot(b.x,b.y) || 1;
+      x += sign*3*b.x/m; y += sign*3*b.y/m;
+      if (Math.abs(x - endX) < 4 && Math.abs(y-cy) < R+1) { pts.push([endX, y]); closed = true; break; }
+      if (inside(x,y)) break;
+      if (x<-250||x>W+250||y<-250||y>H+250) break;
+    }
+    return { pts, closed };
+  }
+  for(const yo of [-48,-30,-12]){
+    const f = trace(x1+3, cy+yo, 1, x0);        // N극 면에서 출발
+    lines.push(f.pts);
+    if (!f.closed){                                // 닫히지 않은 선은 S극 쪽 절반도 그림
+      const r = trace(x0-3, cy+yo, -1, x1);
+      lines.push(r.pts.reverse());                 // 흐름 방향(바깥 → S극)으로 순서 맞춤
+    }
+  }
+  const insideLines = [-36,-12,12,36].map(yo => [[x0,cy+yo],[x1,cy+yo]]);
+
+  const K = 6e4, EARTH = 0.35;
+  function fieldAt(x,y){
+    const s = st.on ? st.I/5 : 0;
+    const b = Bplus(x,y);
+    return { x: st.dir*b.x*K*s, y: st.dir*b.y*K*s - EARTH };
+  }
+
+  // 드래그
+  let drag = null;
+  cv.addEventListener("pointerdown", e => {
+    const p = toLogical(cv, W, e);
+    drag = compasses.find(c => Math.hypot(c.x-p.x, c.y-p.y) < 28) || null;
+    if (drag) cv.setPointerCapture(e.pointerId);
+  });
+  cv.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const p = toLogical(cv, W, e);
+    drag.x = Math.max(24, Math.min(W-24, p.x)); drag.y = Math.max(24, Math.min(H-24, p.y));
+  });
+  ["pointerup","pointercancel"].forEach(t => cv.addEventListener(t, () => drag = null));
+
+  function drawCompass(c){
+    ctx.save(); ctx.translate(c.x, c.y);
+    ctx.fillStyle = C.surface; ctx.strokeStyle = C["ink-2"]; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0,0,22,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.rotate(c.a);
+    ctx.fillStyle = C.n; ctx.beginPath(); ctx.moveTo(18,0); ctx.lineTo(0,5); ctx.lineTo(0,-5); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = C.s; ctx.beginPath(); ctx.moveTo(-18,0); ctx.lineTo(0,5); ctx.lineTo(0,-5); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(0,0,2.5,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  function step(dt){
+    st.phase += dt*0.6*(st.I/2);
+    for(const c of compasses){
+      const f = fieldAt(c.x, c.y);
+      const target = Math.atan2(f.y, f.x);
+      let d = target - c.a; d = Math.atan2(Math.sin(d), Math.cos(d));
+      c.a += d*Math.min(1, dt*8);
+    }
+    // 클립: 전류 세기에 비례해 코일 쪽으로 끌림(방향과 무관)
+    const target = st.on ? -0.07*st.I : 0;
+    st.clipV += ((target - st.clipA)*40 - st.clipV*4)*dt;
+    st.clipA += st.clipV*dt;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // 방위 표시
+    label(ctx, "북 ↑", 40, 22, C["ink-2"], 13, 500);
+    // 자기력선
+    if (st.lines && st.on){
+      const s = st.I/5;
+      ctx.save();
+      ctx.strokeStyle = C.field; ctx.globalAlpha = 0.25 + 0.6*s; ctx.lineWidth = 1.6 + s;
+      ctx.setLineDash([7,9]); ctx.lineDashOffset = -st.phase*40;
+      const all = lines.concat(lines.map(l => l.map(([x,y]) => [x, 2*cy - y])));
+      for(const l of all.concat(insideLines)){
+        ctx.beginPath(); ctx.moveTo(l[0][0], l[0][1]);
+        for(let i=1;i<l.length;i++) ctx.lineTo(l[i][0], l[i][1]);
+        if (st.dir < 0){ ctx.save(); ctx.lineDashOffset = st.phase*40; ctx.stroke(); ctx.restore(); }
+        else ctx.stroke();
+      }
+      ctx.restore();
+      label(ctx, "자기력선", 660, 22, C.field, 13, 500);
+    }
+    // 전원 장치와 도선
+    const by = 395;
+    ctx.strokeStyle = C["ink-2"]; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x0, cy+R); ctx.lineTo(x0, by); ctx.lineTo(310, by); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, cy+R); ctx.lineTo(x1, by); ctx.lineTo(410, by); ctx.stroke();
+    ctx.fillStyle = C.surface; ctx.strokeStyle = C.ink; ctx.lineWidth = 2;
+    roundRect(ctx, 310, by-20, 100, 40, 8); ctx.fill(); ctx.stroke();
+    label(ctx, "전원 장치", 360, by, C.ink, 13, 500);
+    label(ctx, st.dir>0 ? "(+)" : "(−)", 296, by-14, st.dir>0 ? C.n : C.s, 13);
+    label(ctx, st.dir>0 ? "(−)" : "(+)", 424, by-14, st.dir>0 ? C.s : C.n, 13);
+    if (st.on){
+      // 도선 위 전류 방향 (왼쪽 도선: dir+1이면 위로)
+      arrowHead(ctx, x0, 335, st.dir>0 ? -Math.PI/2 : Math.PI/2, 7, C.accent);
+      arrowHead(ctx, x1, 335, st.dir>0 ? Math.PI/2 : -Math.PI/2, 7, C.accent);
+      label(ctx, "전류 " + st.I.toFixed(1) + " A", 360, 365, C.accent, 13, 700);
+    } else {
+      label(ctx, "스위치 열림 (전류 없음)", 360, 365, C["ink-2"], 13, 500);
+    }
+    drawCoil(ctx, x0, x1, cy, R, TURNS, st.dir, st.on, st.phase);
+    if (st.poles && st.on){
+      const nx = st.dir>0 ? x1+16 : x0-16, sx = st.dir>0 ? x0-16 : x1+16;
+      label(ctx, "N", nx, cy, C.n, 22, 900); label(ctx, "S", sx, cy, C.s, 22, 900);
+    }
+    // 클립
+    if (st.clip){
+      const px = 560, py = 20, L = 150;
+      ctx.strokeStyle = C["ink-2"]; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(525,py); ctx.lineTo(600,py); ctx.stroke();
+      const ex = px + L*Math.sin(st.clipA), ey = py + L*Math.cos(st.clipA);
+      ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(ex,ey); ctx.stroke();
+      ctx.save(); ctx.translate(ex, ey+12); ctx.rotate(-st.clipA);
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 2.2;
+      roundRect(ctx, -6, -12, 12, 26, 6); ctx.stroke();
+      roundRect(ctx, -3, -7, 6, 17, 3); ctx.stroke();
+      ctx.restore();
+      label(ctx, "클립", px+30, ey+12, C["ink-2"], 12, 500, "left");
+    }
+    compasses.forEach(drawCompass);
+  }
+
+  function ui(){
+    const b = $("s1Switch");
+    b.textContent = st.on ? "스위치 열기" : "스위치 닫기";
+    b.classList.toggle("on", st.on); b.classList.toggle("primary", !st.on);
+  }
+  $("s1Switch").onclick = () => { st.on = !st.on; ui(); };
+  $("s1Flip").onclick = () => { st.dir *= -1; };
+  $("s1I").oninput = e => { st.I = +e.target.value; $("s1Iv").textContent = st.I.toFixed(1)+" A"; };
+  $("s1Lines").onchange = e => st.lines = e.target.checked;
+  $("s1Poles").onchange = e => st.poles = e.target.checked;
+  $("s1Clip").onchange = e => st.clip = e.target.checked;
+  ui();
+  return { step, draw };
+})();
+
+/* ---------- 시뮬레이션 2: 그네형 코일이 받는 힘 ---------- */
+const S2 = (() => {
+  const W = 720, H = 380;
+  const cv = $("c2"); const ctx = setupCanvas(cv, W, H);
+  const pivot = {x:300, y:40}, L = 190;
+  const st = { on:false, dir:1, magLeftN:true, I:2, poles:false, a:0, v:0, phase:0 };
+  let pressTimer = 0;
+
+  function coilRightPoleN(){ return st.dir > 0; }   // 코일 오른쪽 면이 N극인가
+  function interaction(){                               // +1: 끌어당김, -1: 밀어냄
+    const coilN = coilRightPoleN(), magN = st.magLeftN;
+    return coilN === magN ? -1 : 1;
+  }
+  function step(dt){
+    st.phase += dt*0.6*(st.I/2);
+    const target = st.on ? interaction()*0.055*st.I : 0;
+    st.v += ((target - st.a)*30 - st.v*2.2)*dt;
+    st.a += st.v*dt;
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // 스탠드
+    ctx.strokeStyle = C["ink-2"]; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(150, pivot.y); ctx.lineTo(450, pivot.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(150, pivot.y); ctx.lineTo(150, 360); ctx.lineTo(110, 360); ctx.lineTo(190,360); ctx.stroke();
+    // 매달린 코일
+    const ex = pivot.x + L*Math.sin(st.a), ey = pivot.y + L*Math.cos(st.a);
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(pivot.x-50, pivot.y); ctx.lineTo(ex-50, ey-38); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pivot.x+50, pivot.y); ctx.lineTo(ex+50, ey-38); ctx.stroke();
+    drawCoil(ctx, ex-70, ex+70, ey, 38, 7, st.dir, st.on, st.phase);
+    if (st.poles && st.on){
+      label(ctx, coilRightPoleN() ? "N" : "S", ex+86, ey, coilRightPoleN() ? C.n : C.s, 20, 900);
+      label(ctx, coilRightPoleN() ? "S" : "N", ex-86, ey, coilRightPoleN() ? C.s : C.n, 20, 900);
+    }
+    // 자석
+    const mx = 470, my = 230 - 30, mw = 190, mh = 60;
+    ctx.fillStyle = st.magLeftN ? C.n : C.s; ctx.fillRect(mx, my, mw/2, mh);
+    ctx.fillStyle = st.magLeftN ? C.s : C.n; ctx.fillRect(mx+mw/2, my, mw/2, mh);
+    label(ctx, st.magLeftN ? "N" : "S", mx+mw/4, my+mh/2, "#fff", 26, 900);
+    label(ctx, st.magLeftN ? "S" : "N", mx+3*mw/4, my+mh/2, "#fff", 26, 900);
+    label(ctx, "네오디뮴 자석", mx+mw/2, my+mh+18, C["ink-2"], 13, 500);
+    // 힘 화살표
+    if (st.on && Math.abs(st.a) > 0.02){
+      const f = interaction();
+      const ax = ex + (f>0 ? 100 : -100), col = f>0 ? C.ok : C.accent;
+      ctx.strokeStyle = col; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(ex + (f>0?30:-30), ey+60); ctx.lineTo(ax, ey+60); ctx.stroke();
+      arrowHead(ctx, ax, ey+60, f>0 ? 0 : Math.PI, 10, col);
+      label(ctx, f>0 ? "끌어당기는 힘" : "밀어 내는 힘", ex, ey+84, col, 15, 700);
+    }
+    label(ctx, st.on ? `전류 ${st.I.toFixed(1)} A 흐르는 중` : "스위치를 눌러 전류를 흘려 보세요", 360, 18, st.on ? C.accent : C["ink-2"], 13, 500);
+  }
+  function ui(){
+    const b = $("s2Switch");
+    b.textContent = st.on ? "스위치 떼기" : "스위치 누르기";
+    b.classList.toggle("on", st.on); b.classList.toggle("primary", !st.on);
+  }
+  $("s2Switch").onclick = () => { st.on = !st.on; ui(); };
+  $("s2Flip").onclick = () => st.dir *= -1;
+  $("s2Mag").onclick = () => st.magLeftN = !st.magLeftN;
+  $("s2I").oninput = e => { st.I = +e.target.value; $("s2Iv").textContent = st.I.toFixed(1)+" A"; };
+  $("s2Poles").onchange = e => st.poles = e.target.checked;
+  const tb = $("t2").querySelector("tbody");
+  $("s2Rec").onclick = () => {
+    const tr = document.createElement("tr");
+    let move = "움직이지 않음";
+    if (st.on){
+      const amt = st.I >= 3.5 ? "많이 " : st.I <= 1.5 ? "조금 " : "";
+      move = interaction() > 0 ? `자석 쪽으로 ${amt}끌려감` : `자석 반대쪽으로 ${amt}밀려남`;
+    }
+    [st.magLeftN ? "N극" : "S극", st.dir > 0 ? "정방향" : "역방향", st.on ? st.I.toFixed(1)+" A" : "0 A", move]
+      .forEach(t => { const td = document.createElement("td"); td.textContent = t; tr.appendChild(td); });
+    tb.appendChild(tr);
+  };
+  $("s2Clr").onclick = () => tb.innerHTML = "";
+  ui();
+  return { step, draw };
+})();
+
+/* ---------- 시뮬레이션 3: 전동기 ---------- */
+const S3 = (() => {
+  const W = 720, H = 400;
+  const cv = $("c3"); const ctx = setupCanvas(cv, W, H);
+  const cx = 360, cy = 200;
+  const st = { on:false, I:2, B:1, comm:true, phi:1.1, w:0, p:1, flash:0, rpmShown:0 };
+  const k = 2.0, b = 1.6;
+
+  function step(dt){
+    const n = 4, h = dt/n;
+    for(let i=0;i<n;i++){
+      if (st.comm){
+        const np = Math.sin(st.phi) >= 0 ? -1 : 1;
+        if (np !== st.p && st.on){ st.flash = 0.35; }
+        st.p = np;
+      }
+      const I = st.on ? st.I : 0;
+      // 코일 N극 방향 각도 = phi (p=+1) 또는 phi+π (p=-1). 자석 자기장은 +x 방향.
+      const torque = -k*I*st.B*st.p*Math.sin(st.phi);
+      st.w += (torque - b*st.w - Math.sign(st.w)*0.15)*h;
+      if (!st.on && Math.abs(st.w) < 0.05) st.w = 0;
+      st.phi += st.w*h;
+    }
+    st.phi = Math.atan2(Math.sin(st.phi), Math.cos(st.phi));
+    st.flash = Math.max(0, st.flash - dt);
+    const rpm = Math.abs(st.w)*60/(2*Math.PI);
+    st.rpmShown += (rpm - st.rpmShown)*Math.min(1, dt*3);
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // 자석 (왼쪽 N, 오른쪽 S)
+    const mag = (x, isN) => {
+      ctx.fillStyle = isN ? C.n : C.s;
+      roundRect(ctx, x, cy-90, 110, 180, 12); ctx.fill();
+      label(ctx, isN ? "N" : "S", x+55, cy, "#fff", 40, 900);
+    };
+    mag(70, true); mag(540, false);
+    label(ctx, ["", "자석 세기: 약", "자석 세기: 중", "자석 세기: 강"][st.B], 360, 30, C["ink-2"], 13, 500);
+    // 자기장
+    ctx.save(); ctx.strokeStyle = C.field; ctx.globalAlpha = 0.18 + 0.12*st.B; ctx.lineWidth = 1.5;
+    ctx.setLineDash([6,8]);
+    for(const yo of [-70,-35,0,35,70]){
+      ctx.beginPath(); ctx.moveTo(185, cy+yo); ctx.lineTo(535, cy+yo); ctx.stroke();
+      arrowHead(ctx, 520, cy+yo, 0, 5, C.field);
+    }
+    ctx.restore();
+    // 회전 코일
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(st.phi);
+    const len = 230, wid = 56;
+    const nRight = st.p > 0;   // 막대의 +x 쪽 끝이 N극인가
+    const I = st.on ? 1 : 0;
+    ctx.globalAlpha = I ? 1 : 0.55;
+    ctx.fillStyle = nRight ? C.s : C.n; roundRect(ctx, -len/2, -wid/2, len/2, wid, 10); ctx.fill();
+    ctx.fillStyle = nRight ? C.n : C.s; roundRect(ctx, 0, -wid/2, len/2, wid, 10); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = C.copper; ctx.lineWidth = 3;
+    for(let x=-len/2+14; x<len/2-8; x+=14){ ctx.beginPath(); ctx.moveTo(x, -wid/2); ctx.lineTo(x+7, wid/2); ctx.stroke(); }
+    if (st.on){
+      label(ctx, nRight ? "N" : "S", len/2-24, 0, "#fff", 22, 900);
+      label(ctx, nRight ? "S" : "N", -len/2+24, 0, "#fff", 22, 900);
+    }
+    ctx.restore();
+    // 축
+    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2); ctx.fill();
+    // 정류자 안내
+    if (st.flash > 0 && st.comm){
+      ctx.globalAlpha = Math.min(1, st.flash*4);
+      label(ctx, "⚡ 정류자: 전류 방향이 바뀌어 코일의 극이 바뀜!", 360, 360, C.accent, 15, 700);
+      ctx.globalAlpha = 1;
+    } else if (!st.on){
+      label(ctx, "전원이 꺼져 있어 코일에 극이 생기지 않아요", 360, 360, C["ink-2"], 14, 500);
+    } else if (!st.comm){
+      label(ctx, "정류자 없음: 전류 방향이 바뀌지 않아요", 360, 360, C["ink-2"], 14, 500);
+    }
+    // 속도계
+    label(ctx, `회전 속도 ${Math.round(st.rpmShown)} 회/분`, 360, 384, C.ink, 15, 700);
+  }
+  function ui(){
+    const bt = $("s3Switch");
+    bt.textContent = st.on ? "전원 끄기" : "전원 켜기";
+    bt.classList.toggle("on", st.on); bt.classList.toggle("primary", !st.on);
+  }
+  $("s3Switch").onclick = () => {
+    st.on = !st.on;
+    if (st.on && Math.abs(st.w) < 0.3 && Math.abs(Math.sin(st.phi)) < 0.2) st.phi += 0.6; // 멈춘 자리에서 출발하도록 살짝 돌려 줌
+    ui();
+  };
+  $("s3I").oninput = e => { st.I = +e.target.value; $("s3Iv").textContent = st.I.toFixed(1)+" A"; };
+  $("s3B").oninput = e => { st.B = +e.target.value; $("s3Bv").textContent = ["","약","중","강"][st.B]; };
+  $("s3Comm").onchange = e => { st.comm = e.target.checked; };
+  const tb = $("t3").querySelector("tbody");
+  $("s3Rec").onclick = () => {
+    const tr = document.createElement("tr");
+    [st.on ? st.I.toFixed(1)+" A" : "0 A (꺼짐)", ["","약","중","강"][st.B], st.comm ? "사용" : "사용 안 함", Math.round(st.rpmShown)]
+      .forEach(t => { const td = document.createElement("td"); td.textContent = t; tr.appendChild(td); });
+    tb.appendChild(tr);
+  };
+  $("s3Clr").onclick = () => tb.innerHTML = "";
+  ui();
+  return { step, draw };
+})();
+
+/* ---------- 애니메이션 루프 (화면에 보이는 것만) ---------- */
+const sims = [[S1,"c1"],[S2,"c2"],[S3,"c3"]].map(([s,id]) => ({ s, el:$(id), vis:true }));
+if ("IntersectionObserver" in window){
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const o = sims.find(x => x.el === e.target); if (o) o.vis = e.isIntersecting;
+  }));
+  sims.forEach(o => io.observe(o.el));
+}
+let last = performance.now();
+function loop(t){
+  const dt = Math.min(0.05, (t-last)/1000); last = t;
+  for(const o of sims){ o.s.step(dt); if (o.vis) o.s.draw(); }
+  requestAnimationFrame(loop);
+}
+sims.forEach(o => o.s.draw());
+requestAnimationFrame(loop);
+
+/* ---------- 확인 문제 ---------- */
+const Q = [
+  { q:"코일에 전류가 흐를 때 코일 주위에 생기는 것은?", c:["정전기","자기장","소리","빛"], a:1,
+    e:"코일에 전류가 흐르면 코일 주위에 자기장이 생겨요. 그래서 나침반 바늘이 움직였지요." },
+  { q:"코일에 흐르는 전류의 방향을 반대로 바꾸면 코일 옆 나침반 바늘의 N극은?", c:["움직이지 않는다","처음과 반대 방향을 가리킨다","북쪽만 가리킨다","계속 회전한다"], a:1,
+    e:"전류의 방향이 바뀌면 자기장의 방향이 바뀌므로 나침반 바늘도 반대 방향을 가리켜요." },
+  { q:"코일에 흐르는 전류를 세게 하면 코일 옆에 매달린 클립은?", c:["더 약하게 끌려 온다","더 세게 끌려 온다","밀려난다","변화가 없다"], a:1,
+    e:"전류가 셀수록 코일 주위의 자기장이 세져서 클립이 더 많이 끌려 와요." },
+  { q:"오른손 네 손가락을 코일에 흐르는 전류의 방향으로 감아쥘 때 엄지손가락이 가리키는 쪽은?", c:["코일의 N극","코일의 S극","전류가 들어가는 곳","전원 장치의 (−)극"], a:0,
+    e:"엄지손가락이 가리키는 방향이 코일 안 자기장의 방향, 즉 코일의 N극 쪽이에요." },
+  { q:"자석과 전류가 흐르는 코일의 같은 극끼리 마주 보면 코일은?", c:["자석 쪽으로 끌려간다","자석에서 밀려난다","움직이지 않는다","위로 떠오른다"], a:1,
+    e:"같은 극끼리는 밀어 내는 힘, 다른 극끼리는 끌어당기는 힘이 작용해요." },
+  { q:"전동기를 더 빨리 회전하게 하는 방법으로 알맞지 않은 것은?", c:["코일에 흐르는 전류를 세게 한다","더 센 자석을 사용한다","전원 장치의 (+)극, (−)극 연결만 바꾼다","코일을 더 많이 감는다"], a:2,
+    e:"전류의 방향만 바꾸면 회전 방향이 바뀔 뿐 빨라지지 않아요. 전류·자석·감은 수를 늘리면 힘이 커져요." }
+];
+const box = $("quizBox"); const answered = {};
+Q.forEach((it, i) => {
+  const d = document.createElement("div"); d.className = "q card";
+  const p = document.createElement("p"); p.textContent = `${i+1}. ${it.q}`; d.appendChild(p);
+  const ch = document.createElement("div"); ch.className = "choices";
+  const fb = document.createElement("div"); fb.className = "fb";
+  it.c.forEach((t, j) => {
+    const b = document.createElement("button"); b.textContent = `${"①②③④"[j]} ${t}`;
+    b.onclick = () => {
+      if (answered[i] !== undefined) return;
+      answered[i] = j === it.a;
+      b.classList.add(j === it.a ? "correct" : "wrong");
+      ch.children[it.a].classList.add("correct");
+      fb.textContent = (j === it.a ? "⭕ 정답! " : "❌ 아쉬워요. ") + it.e;
+      score();
+    };
+    ch.appendChild(b);
+  });
+  d.appendChild(ch); d.appendChild(fb); box.appendChild(d);
+});
+const retry = document.createElement("button"); retry.textContent = "다시 풀기";
+retry.onclick = () => { box.innerHTML = ""; Object.keys(answered).forEach(k => delete answered[k]); $("quizScore").textContent = ""; buildAgain(); };
+function buildAgain(){ location.hash = ""; location.reload(); }
+function score(){
+  const n = Object.keys(answered).length, ok = Object.values(answered).filter(Boolean).length;
+  $("quizScore").textContent = n === Q.length ? `${Q.length}문제 중 ${ok}문제 맞혔어요! ${ok===Q.length?"🎉 완벽해요!":""}` : `${n}/${Q.length} 풀이 중 · 맞힌 문제 ${ok}개`;
+  if (n === Q.length && !retry.isConnected) $("quizScore").after(retry);
+}
+
+/* ---------- 내비게이션 표시 ---------- */
+const navLinks = [...document.querySelectorAll("nav.steps a")];
+if ("IntersectionObserver" in window){
+  const secIO = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){
+      navLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#"+e.target.id));
+      const on = navLinks.find(a => a.classList.contains("on"));
+      if (on) on.scrollIntoView({block:"nearest", inline:"nearest"});
+    }
+  }), { rootMargin:"-45% 0px -50% 0px" });
+  document.querySelectorAll("main section").forEach(s => secIO.observe(s));
+}
+})();
+</script>
+</body>
+</html>
